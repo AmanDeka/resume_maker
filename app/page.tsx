@@ -15,12 +15,15 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
+
+
 export default function App(){
     return (
         <div>
             <Document file = {{url:'/api'}}>
                 <Page pageNumber={1}/>
             </Document>
+
         </div>
     )
 }
