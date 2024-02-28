@@ -1,6 +1,11 @@
 import create from '@/server/generate'
 
 export async function GET(){
-    const buffer = await create();
-    return new Response(buffer);
+    try{
+        const buffer = await create('templates',{'!name':'Aman'});
+        return new Response(buffer);
+    }
+    catch(e){
+        return new Response('error');
+    }
 }

@@ -1,4 +1,4 @@
-type PatternDict = {
+export type PatternDict = {
     [key:string]:string
 };
 
