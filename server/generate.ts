@@ -20,13 +20,8 @@ export default async function create(templateFolder:string,obj:PatternDict): Pro
             fs.writeFileSync(path.join(dirPath, 'resume.tex'),doc);
             fs.writeFileSync(path.join(dirPath, 'resume.cls'),cls);
 
-            console.log('wrote',dirPath);
 
             const ls = spawn("latexmk", ["-pdf"], { cwd:dirPath });
-
-            ls.on('error',(err)=>{
-                console.log(err);
-            })
 
             ls.on('close', (code) => {
                 console.log(`child process exited with code ${code}`);
