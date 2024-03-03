@@ -1,4 +1,4 @@
-import create from '@/server/generate'
+import {create} from '@/server/document'
 
 export async function GET(){
     try{
