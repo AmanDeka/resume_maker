@@ -1,3 +1,5 @@
+
+
 export type PatternDict = {
     [key: string]: string
 };
@@ -14,3 +16,4 @@ export function replace(template: string, dictionary: PatternDict): string {
 
     return template;
 }
+

@@ -59,5 +59,13 @@ export async function update_pattern_dict(obj:PatternDict){
 }
 
 export async function get_pattern_dict(){
-    return await loadJsonFile('data.json');
+    return await loadJsonFile('data.json',{reviver:(key,value)=>{
+        return value as string;
+    }}) as PatternDict;
+}
+
+export default async function  generate_document(){
+    const obj = await get_pattern_dict();
+    console.log(obj);
+    return create('templates',obj);
 }

@@ -6,6 +6,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 import { Button } from "@/components/ui/button"
+import { update_pattern_dict } from '@/server/document';
 
 
 
@@ -30,11 +31,14 @@ function Doc() {
 export default function App() {
 
     const [instance, update] = usePDF({ document : <Doc/>});
-
+    const cus = () => {
+        update_pattern_dict({'!name':'Hello'});
+        update(<Doc/>)
+    }
     return (
         <div>
-
-
+            <Doc/>
+            <Button variant={'default'} onClick={cus}>Update</Button>
         </div>
     )
 }

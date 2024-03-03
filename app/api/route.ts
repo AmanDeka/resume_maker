@@ -1,8 +1,9 @@
-import {create} from '@/server/document'
+import { update_pattern_dict } from "@/server/document";
+import generate_document,{create} from '@/server/document'
 
 export async function GET(){
     try{
-        const buffer = await create('templates',{'!name':'Aman'});
+        const buffer = await generate_document();
         return new Response(buffer);
     }
     catch(e){
