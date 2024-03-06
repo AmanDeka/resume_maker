@@ -8,6 +8,9 @@ import { replace, PatternDict } from './utils';
 import {writeJsonFile} from 'write-json-file';
 import {loadJsonFile} from 'load-json-file';
 
+import tex_file from './templates/simple/tex_file';
+import cls_file from './templates/simple/cls_file';
+
 
 
 
@@ -17,12 +20,13 @@ export  async function create(templateFolder: string, obj: PatternDict): Promise
 
     return new Promise((res, rej) => {
         temp.track();
+        fs.writeFileSync(path.join(process.cwd(), 'server', 'text.cls'), cls_file);
 
         temp.mkdir('temp', (err, dirPath) => {
-            const template = fs.readFileSync(path.join(process.cwd(), 'server', templateFolder, 'resume.tex'), 'utf8');
             const cls = fs.readFileSync(path.join(process.cwd(), 'server', templateFolder, 'resume.cls'), 'utf8');
 
-            const doc = replace(template, obj);
+
+            const doc = replace(tex_file, obj);
 
             fs.writeFileSync(path.join(dirPath, 'resume.tex'), doc);
             fs.writeFileSync(path.join(dirPath, 'resume.cls'), cls);
