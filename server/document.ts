@@ -13,7 +13,7 @@ import cls_file from './templates/simple/cls_file';
 
 
 
-export async function create(templateFolder: string, obj: PatternDict): Promise<Buffer> {
+export async function create( obj: PatternDict): Promise<Buffer> {
 
     return new Promise((res, rej) => {
         temp.track();
@@ -66,5 +66,5 @@ export async function get_pattern_dict() {
 export default async function generate_document() {
     const obj = await get_pattern_dict();
     console.log(obj);
-    return create('templates', obj);
+    return create(obj);
 }
