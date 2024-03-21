@@ -1,4 +1,4 @@
-import '@/app/globals.css';
+import './global.css';
 import { ThemeProvider } from '@/components/theme_provider';
 export const metadata = {
   title: 'Next.js',
@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dracula">
       <body>
         <ThemeProvider
           attribute="class"
