@@ -5,8 +5,8 @@ const tex_file =
 
 % --------- Contact Information -----------
 \\introduction[
-    fullname={!name},
-    email={!email},
+    fullname={_name},
+    email={_email},
     phone={!phone},
     linkedin={!linkedin},
     github={!github}

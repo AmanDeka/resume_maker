@@ -1,21 +1,17 @@
 'use client'
 
-/*import { pdfjs, Document, Page ,} from 'react-pdf';
+import { pdfjs, Document, Page ,} from 'react-pdf';
 import { usePDF } from '@react-pdf/renderer';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-*/
-import UserForm from '@/components/userForm';
-import { useTheme } from 'next-themes';
-/*
-import { Button } from "@/components/ui/button"
-import { update_pattern_dict } from '@/server/document';
+
+import SimpleResumeForm from '@/components/simpleResumeForm';
 
 
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-*/
-/*pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.js',
     import.meta.url,
 ).toString();
@@ -30,18 +26,15 @@ function Doc() {
         </Document>
     )
 }
-*/
+
 export default function App() {
 
-    //const [instance, update] = usePDF({ document : <Doc/>});
-    /*const cus = () => {
-        update_pattern_dict({'!name':'Hello'});
-        update(<Doc/>)
-    }*/
+    const [instance, update] = usePDF({ document : <Doc/>});
 
     return (
         <div className="h-screen">
-            <UserForm/>
+            <SimpleResumeForm update = {()=>{update(<Doc/>)}}/>
+            <Doc/>
         </div>
     )
 }

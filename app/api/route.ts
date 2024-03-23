@@ -1,4 +1,3 @@
-import { update_pattern_dict } from "@/server/document";
 import generate_document,{create} from '@/server/document'
 
 export async function GET(){
