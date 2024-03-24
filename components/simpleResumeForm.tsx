@@ -1,6 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm ,UseFormRegister} from "react-hook-form";
-import { update_pattern_dict,PatternDict } from "@/server/utils";
+import { update_pattern_dict } from "@/server/utils";
 
 type Fields = {
     _name:String

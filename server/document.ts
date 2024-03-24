@@ -3,7 +3,7 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import temp from 'temp';
 import path from "path";
-import { replace, PatternDict,get_pattern_dict } from './utils';
+import { replace, StringDict,get_pattern_dict } from './utils';
 
 
 import tex_file from './templates/simple/tex_file';
@@ -11,7 +11,7 @@ import cls_file from './templates/simple/cls_file';
 
 
 
-export async function create( obj: PatternDict): Promise<Buffer> {
+export async function create( obj: StringDict): Promise<Buffer> {
 
     return new Promise((res, rej) => {
         temp.track();
