@@ -1,7 +1,6 @@
 const simple_template = {
     'start':`\\documentclass{resume}
-
-    \\begin{document}`,
+\\begin{document}`,
 
     'introduction':`\\introduction[
         fullname={_name},
@@ -16,4 +15,6 @@ const simple_template = {
 
     'end':`\\end{document}`
 
-}
+};
+
+export default simple_template;

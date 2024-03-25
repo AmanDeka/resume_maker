@@ -3,11 +3,14 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import temp from 'temp';
 import path from "path";
-import { replace, StringDict,get_pattern_dict } from './utils';
+import { StringDict,get_pattern_dict } from './utils';
+
+import tex_constructor from './constructor';
 
 
 import tex_file from './templates/simple/tex_file';
 import cls_file from './templates/simple/cls_file';
+import simple_template from './templates/simple/tex_template';
 
 
 
@@ -17,7 +20,8 @@ export async function create( obj: StringDict): Promise<Buffer> {
         temp.track();
 
         temp.mkdir('temp', async (err, dirPath) => {
-            const doc = await replace(tex_file, obj);
+            const doc = await tex_constructor(simple_template,{'introduction':true,'summary':true}, obj);
+
 
             fs.writeFileSync(path.join(dirPath, 'resume.tex'), doc);
             fs.writeFileSync(path.join(dirPath, 'resume.cls'), cls_file);

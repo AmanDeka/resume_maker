@@ -12,19 +12,6 @@ export type BooleanDict = {
     [key: string]: boolean
 };
 
-function replacePattern(template: string, pattern: string, text: string): string {
-    return template.replaceAll(pattern, text);
-}
-
-export async function replace(template: string, dictionary: StringDict): Promise<string> {
-    return new Promise((res, rej) => {
-        Object.keys(dictionary).forEach((key: string) => {
-            template = replacePattern(template, key, dictionary[key]);
-        });
-        res(template);
-    });
-
-}
 
 export async function update_pattern_dict(obj: any) {
     await writeJsonFile('data.json', obj);
