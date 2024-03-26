@@ -29,12 +29,11 @@ function Doc() {
 
 export default function App() {
 
-    const [instance, update] = usePDF({ document : <Doc/>});
+    //const [instance, update] = usePDF({ document : <Doc/>});
 
     return (
         <div className="h-screen">
-            <SimpleResumeForm update = {()=>{update(<Doc/>)}}/>
-            <Doc/>
+            <SimpleResumeForm update = {()=>{}}/>
         </div>
     )
 }
