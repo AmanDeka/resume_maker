@@ -19,10 +19,26 @@ export async function update_pattern_dict(obj: any) {
 }
 
 export async function get_pattern_dict() {
-    return await loadJsonFile('data.json', {
+    const obj = await loadJsonFile('data.json', {
         reviver: (key, value) => {
-            return value as string;
+            return value;
         }
-    }) as StringDict;
+    }) as {[key:string]:any};
+
+    let str_dict:StringDict = {};
+    let bool_dict:BooleanDict = {};
+
+    for (const [key, value] of Object.entries(obj)) {
+        if(typeof(value) === 'string'){
+            str_dict[key as string] = value;
+        }
+      }
+
+      for (const [key, value] of Object.entries(obj['sections'])) {
+        if(typeof(value) === 'boolean'){
+            bool_dict[key as string] = value;
+        }
+      }
+    return {pattern_dict:str_dict,section_dict:bool_dict};
 }
 

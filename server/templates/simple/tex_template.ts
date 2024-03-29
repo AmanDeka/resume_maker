@@ -8,7 +8,7 @@ const simple_template = {
         phone={_phone},
         linkedin={_linkedin},
         github={_github}
-    ]`,
+]`,
 
     'summary':`\\summary{_summary}`,
 

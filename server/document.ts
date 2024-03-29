@@ -3,7 +3,7 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import temp from 'temp';
 import path from "path";
-import { StringDict,get_pattern_dict } from './utils';
+import { StringDict,get_pattern_dict ,BooleanDict} from './utils';
 
 import tex_constructor from './constructor';
 
@@ -14,14 +14,15 @@ import simple_template from './templates/simple/tex_template';
 
 
 
-export async function create( obj: StringDict): Promise<Buffer> {
+export async function create( pattern_dict: StringDict,section_dict:BooleanDict): Promise<Buffer> {
 
     return new Promise((res, rej) => {
         temp.track();
 
         temp.mkdir('temp', async (err, dirPath) => {
-            const doc = await tex_constructor(simple_template,{'introduction':true,'summary':true}, obj);
-
+            console.log(pattern_dict,section_dict);
+            const doc = await tex_constructor(simple_template,section_dict, pattern_dict);
+            console.log(doc);
 
             fs.writeFileSync(path.join(dirPath, 'resume.tex'), doc);
             fs.writeFileSync(path.join(dirPath, 'resume.cls'), cls_file);
@@ -55,7 +56,6 @@ export async function create( obj: StringDict): Promise<Buffer> {
 
 
 export default async function generate_document() {
-    const obj = await get_pattern_dict();
-    console.log(obj);
-    return create(obj);
+    const {pattern_dict,section_dict} = await get_pattern_dict();
+    return create(pattern_dict,section_dict);
 }
