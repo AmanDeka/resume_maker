@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SubmitHandler, useForm, UseFormRegister, useWatch,Control,UseFormSetValue } from "react-hook-form";
+import { SubmitHandler, useForm, UseFormRegister, useWatch, Control, UseFormSetValue } from "react-hook-form";
 import { update_pattern_dict } from "@/server/utils";
 
 import { DevTool } from "@hookform/devtools";
@@ -8,6 +8,8 @@ import { Fields } from "./types";
 
 import IntroductionSection from "./IntroductionSection";
 import SummarySection from "./SummarySection";
+
+import tex_constructor from "@/server/constructor";
 
 
 const SectionSelector: React.FC<{ register: UseFormRegister<Fields> }> = ({ register }) => {
@@ -18,13 +20,13 @@ const SectionSelector: React.FC<{ register: UseFormRegister<Fields> }> = ({ regi
                 <li>
                     <label className="label cursor-pointer">
                         <span className="label-text">Introduction</span>
-                        <input type="checkbox" defaultChecked {...register("sections.introduction")} className="checkbox" />
+                        <input type="checkbox"  {...register("sections.introduction")} className="checkbox" />
                     </label>
                 </li>
                 <li>
                     <label className="label cursor-pointer">
                         <span className="label-text">Summary</span>
-                        <input type="checkbox" defaultChecked {...register("sections.summary")}  className="checkbox" />
+                        <input type="checkbox"  {...register("sections.summary")} className="checkbox" />
                     </label>
                 </li>
             </ul>
@@ -34,23 +36,51 @@ const SectionSelector: React.FC<{ register: UseFormRegister<Fields> }> = ({ regi
 
 
 const sectionsDefaultValues = {
-    introduction:true,
-    summary:true
+    introduction: true,
+    summary: true
 };
+
+const defaultValues = {
+    sections: {
+        introduction: true,
+        summary: false
+    },
+    introduction: `\\introduction[
+        fullname={_name},
+        email={_email},
+        phone={_phone},
+        linkedin={_linkedin},
+        github={_github}
+]`,
+    summary: `\\summary{_summary}`,
+    tokens: {
+        _name: '',
+        _email: '',
+        _phone: '',
+        _linkedin: '',
+        _github: '',
+        _summary: '',
+    },
+    order: ['introduction', 'summary']
+}
 
 
 const Template1Form: React.FC<{ update: () => void }> = ({ update }) => {
     const onSubmit: SubmitHandler<Fields> = async (data) => {
         await update_pattern_dict(data);
+        tex_constructor(data,'template1');
         update();
     }
 
-    const { register, handleSubmit, control,setValue,watch } = useForm<Fields>();
+    const { register, handleSubmit, control, setValue, watch } = useForm<Fields>(
+        {
+            defaultValues:defaultValues,
+        }
+    );
 
     const sectionStates = useWatch({
         control: control,
         name: "sections",
-        defaultValue: sectionsDefaultValues
     });
     const val = watch();
     console.log(val);
@@ -60,8 +90,8 @@ const Template1Form: React.FC<{ update: () => void }> = ({ update }) => {
             <div className="card-body h-full">
                 <h2 className="card-title">Simple Resume</h2>
                 <div className="h-full overflow-y-scroll">
-                    <IntroductionSection register={register} isShow = {sectionStates['introduction']} setValue = {setValue}/>
-                    <SummarySection register={register} isShow = {sectionStates['summary']} setValue = {setValue}/>
+                    <IntroductionSection register={register} isShow={sectionStates['introduction']} setValue={setValue} />
+                    <SummarySection register={register} isShow={sectionStates['summary']} setValue={setValue} />
                     <div className="card-actions justify-end p-2">
                         <SectionSelector register={register} />
                         <button className="btn btn-accent" onClick={handleSubmit(onSubmit)}>Save</button>

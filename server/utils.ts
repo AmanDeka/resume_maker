@@ -12,6 +12,24 @@ export type BooleanDict = {
     [key: string]: boolean
 };
 
+export type template1_fields = {
+    sections: {
+        introduction: boolean,
+        summary: boolean
+    },
+    introduction:string,
+    summary:string,
+    tokens:{
+        _name: string,
+        _email: string,
+        _phone: string,
+        _linkedin: string,
+        _github: string
+        _summary: string,
+    },
+    order:string[]
+}
+
 
 export async function update_pattern_dict(obj: any) {
     await writeJsonFile('data.json', obj);

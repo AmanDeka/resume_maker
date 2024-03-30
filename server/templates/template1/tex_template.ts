@@ -1,4 +1,4 @@
-const simple_template = {
+const template1 = {
     'start':`\\documentclass{resume}
 \\begin{document}`,
 
@@ -17,4 +17,4 @@ const simple_template = {
 
 };
 
-export default simple_template;
+export default template1;

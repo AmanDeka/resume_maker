@@ -8,9 +8,9 @@ import { StringDict,get_pattern_dict ,BooleanDict} from './utils';
 import tex_constructor from './constructor';
 
 
-import tex_file from './templates/simple/tex_file';
-import cls_file from './templates/simple/cls_file';
-import simple_template from './templates/simple/tex_template';
+import tex_file from './templates/template1/tex_file';
+import cls_file from './templates/template1/cls_file';
+import simple_template from './templates/template1/tex_template';
 
 
 

@@ -10,7 +10,7 @@ const IntroductionSection: React.FC<{
 }> =
     ({ register, isShow, setValue }) => {
 
-        useEffect(() => {
+        /*useEffect(() => {
             //register('introduction');
             setValue('introduction',
             `\\introduction[
@@ -21,7 +21,7 @@ const IntroductionSection: React.FC<{
                 github={_github}
         ]`
             );
-        },[]);
+        },[]);*/
 
         return (
             <div className={cn("collapse collapse-arrow px-3 py-1 my-2 bg-base-200", (isShow) ? "" : "hidden")}>

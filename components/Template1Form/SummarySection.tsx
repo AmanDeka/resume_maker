@@ -8,11 +8,11 @@ const SummarySection: React.FC<{
     isShow: boolean,
     setValue: UseFormSetValue<Fields>
 }> = ({ register, isShow, setValue }) => {
-
+    /*
     useEffect(() => {
         //register('summary');
         setValue('summary',`\\summary{_summary}`);
-    }, []);
+    }, []);*/
 
     return (
         <div className={cn("collapse collapse-arrow px-3 py-1 my-2 bg-base-200", (isShow) ? "" : "hidden")}>
