@@ -3,7 +3,7 @@ import { UseFormRegister, useWatch, Control, UseFormSetValue, useFieldArray } fr
 import { cn } from "@/lib/utils";
 import { Fields, EducationItem } from "./types";
 
-const EducationItemForm: React.FC<{ index: number, register: UseFormRegister<Fields> }> = ({ index, register }) => {
+const EducationItemForm: React.FC<{ index: number, register: UseFormRegister<Fields> ,deleteEducationItem:(index:number)=>void}> = ({ index, register ,deleteEducationItem}) => {
     return (
         <div className="card w-11/12 bg-neutral text-neutral-content">
             <div className="card-body">
@@ -35,7 +35,7 @@ const EducationItemForm: React.FC<{ index: number, register: UseFormRegister<Fie
                     <input type="text" className="grow" {...register(`education_items.${index}.coursework`)} placeholder="" />
                 </label>
                 <div className="card-actions justify-end my-2">
-                    <button className="btn btn-primary">Delete Item</button>
+                    <button className="btn btn-primary" onClick={()=>deleteEducationItem(index)}>Delete Item</button>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@ const EducationSection: React.FC<{
     control: Control<Fields, any>
 }> = ({ register, isShow, setValue, control }) => {
 
-    const { fields, append } = useFieldArray({
+    const { fields, append,remove } = useFieldArray({
         name: 'education_items',
         control
     });
@@ -69,6 +69,10 @@ const EducationSection: React.FC<{
         append(empty_ed_item)
     }
 
+    const deleteEducationItem = (index:number) => {
+        remove(index);
+    }
+
 
     return (
         <div className={cn("collapse collapse-arrow px-3 py-1 my-2 bg-base-200", (isShow) ? "" : "hidden")}>
@@ -79,7 +83,7 @@ const EducationSection: React.FC<{
             <div className="collapse-content">
                 {
                     fields.map((field, index) => {
-                        return <EducationItemForm key={field.id} index={index} register={register} />
+                        return <EducationItemForm key={field.id} index={index} register={register} deleteEducationItem = {deleteEducationItem}/>
                     })
                 }
                 <button className="btn btn-accent" onClick={addEmptyEducationItem}>Add Item</button>
