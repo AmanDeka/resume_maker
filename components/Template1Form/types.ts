@@ -8,22 +8,42 @@ export type EducationItem = {
     coursework:string
 }
 
+export type SkillItem = {
+    category:string,
+    skills:string
+}
+
+export type ExperienceItem = {
+    company:string,
+    location:string,
+    position:string,
+    duration:string,
+    description:string
+}
+
 export type Fields = {
     sections: {
         introduction: boolean,
         summary: boolean,
-        education:boolean
+        education:boolean,
+        technical_skills:boolean
+        experience:boolean
     },
     introduction:string,
     summary:string,
+    education:string,
+    technical_skills:string,
+    experience:string,
     tokens:{
         _name: string,
         _email: string,
         _phone: string,
         _linkedin: string,
-        _github: string
+        _github: string,
         _summary: string,
     },
     order:string[],
-    education_items:EducationItem[]
+    education_items:EducationItem[],
+    skill_items:SkillItem[],
+    experience_items:ExperienceItem[]
 }

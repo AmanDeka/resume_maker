@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UseFormRegister, useWatch, Control, UseFormSetValue, useFieldArray } from "react-hook-form";
+import { UseFormRegister, useWatch, Control, UseFormSetValue, useFieldArray,UseFormGetValues } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Fields, EducationItem } from "./types";
 
@@ -42,7 +42,27 @@ const EducationItemForm: React.FC<{ index: number, register: UseFormRegister<Fie
     );
 }
 
+const makeEducationItem = (index:number):string => {
+    return `\\educationItem[
+        university={_education_${index}_university},
+        college={_education_${index}_college},
+        graduation={_education_${index}_graduation},
+        grade={_education_${index}_grade},
+        program={_education_${index}_program},
+        coursework={_education_${index}_coursework},
+]`
+}
 
+const makeEducationTex = (n:number):string => {
+    console.log(n);
+    let ret:string = '\\begin{educationSection}{Education}';
+    for(let i = 0;i<n;i++){
+        ret+='\n'+'\n'+makeEducationItem(i);
+    }
+    ret+='\n'+'\\end{educationSection}';
+    console.log(ret);
+    return ret;
+}
 
 
 const EducationSection: React.FC<{
@@ -50,7 +70,8 @@ const EducationSection: React.FC<{
     isShow: boolean,
     setValue: UseFormSetValue<Fields>,
     control: Control<Fields, any>
-}> = ({ register, isShow, setValue, control }) => {
+    getValue:UseFormGetValues<Fields>
+}> = ({ register, isShow, setValue, control ,getValue}) => {
 
     const { fields, append,remove } = useFieldArray({
         name: 'education_items',
@@ -58,6 +79,8 @@ const EducationSection: React.FC<{
     });
 
     const addEmptyEducationItem = () => {
+        const n = getValue('education_items').length
+        setValue('education',makeEducationTex(n+1));
         const empty_ed_item: EducationItem = {
             university: '',
             college: '',
@@ -66,11 +89,13 @@ const EducationSection: React.FC<{
             program: '',
             coursework: ''
         }
-        append(empty_ed_item)
+        append(empty_ed_item);
+        
     }
 
     const deleteEducationItem = (index:number) => {
         remove(index);
+        setValue('education',makeEducationTex(fields.length));
     }
 
 

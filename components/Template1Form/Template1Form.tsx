@@ -9,6 +9,8 @@ import { Fields } from "./types";
 import IntroductionSection from "./IntroductionSection";
 import SummarySection from "./SummarySection";
 import EducationSection from "./EducationSection";
+import SkillSection from "./SkillSection";
+import ExperienceSection from "./ExperienceSection";
 
 import tex_constructor from "@/server/constructor";
 
@@ -36,6 +38,18 @@ const SectionSelector: React.FC<{ register: UseFormRegister<Fields> }> = ({ regi
                         <input type="checkbox"  {...register("sections.education")} className="checkbox" />
                     </label>
                 </li>
+                <li>
+                    <label className="label cursor-pointer">
+                        <span className="label-text">Technical Skills</span>
+                        <input type="checkbox"  {...register("sections.technical_skills")} className="checkbox" />
+                    </label>
+                </li>
+                <li>
+                    <label className="label cursor-pointer">
+                        <span className="label-text">Technical Experience</span>
+                        <input type="checkbox"  {...register("sections.experience")} className="checkbox" />
+                    </label>
+                </li>
             </ul>
         </ul>
     </details>
@@ -51,7 +65,9 @@ const defaultValues = {
     sections: {
         introduction: true,
         summary: false,
-        education:false
+        education:false,
+        technical_skills:false,
+        experience:false
     },
     introduction: `\\introduction[
         fullname={_name},
@@ -61,6 +77,8 @@ const defaultValues = {
         github={_github}
 ]`,
     summary: `\\summary{_summary}`,
+    education:`\\begin{educationSection}{Education}
+\\end{educationSection}`,
     tokens: {
         _name: '',
         _email: '',
@@ -69,7 +87,7 @@ const defaultValues = {
         _github: '',
         _summary: '',
     },
-    order: ['introduction', 'summary']
+    order: ['introduction', 'summary','education','technical_skills','experience']
 }
 
 
@@ -80,7 +98,7 @@ const Template1Form: React.FC<{ update: () => void }> = ({ update }) => {
         update();
     }
 
-    const { register, handleSubmit, control, setValue, watch } = useForm<Fields>(
+    const { register, handleSubmit, control, setValue,getValues, watch } = useForm<Fields>(
         {
             defaultValues:defaultValues,
         }
@@ -99,7 +117,9 @@ const Template1Form: React.FC<{ update: () => void }> = ({ update }) => {
                 <div className="h-full overflow-y-scroll">
                     <IntroductionSection register={register} isShow={sectionStates['introduction']} setValue={setValue} />
                     <SummarySection register={register} isShow={sectionStates['summary']} setValue={setValue} />
-                    <EducationSection register={register} isShow={sectionStates['education']} setValue={setValue} control = {control} />
+                    <EducationSection register={register} isShow={sectionStates['education']} setValue={setValue} getValue = {getValues} control = {control} />
+                    <SkillSection register={register} isShow={sectionStates['technical_skills']} setValue={setValue} getValue = {getValues} control = {control} />
+                    <ExperienceSection register={register} isShow={sectionStates['experience']} setValue={setValue} getValue = {getValues} control = {control} />
                     <div className="card-actions justify-end p-2">
                         <SectionSelector register={register} />
                         <button className="btn btn-accent" onClick={handleSubmit(onSubmit)}>Save</button>
