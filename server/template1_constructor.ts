@@ -31,6 +31,37 @@ const experience_section = (fields: any) => {
     return tex;
 }
 
+const make_proj_item = (n: number, n_items: number): string => {
+
+    let items = "";
+    for (let i = 0; i < n_items; i++) {
+        items += '\n        '+`\\item _project_${n}_item_${i}`;
+    }
+
+    let item_str = `\\begin{itemize}
+        \\vspace{-0.5em}
+        \\itemsep -6pt {}${items}
+    \\end{itemize}`
+
+    let str = `    \\projectItem[
+            title={_project_${n}_title},
+            duration={_project_${n}_duration},
+            keyHighlight={_project_${n}_keyhighlight}
+    ]
+    ${item_str}`;
+    return str;
+}
+
+const project_section = (fields: any) => {
+    let tex = "\\begin{experienceSection}{Academic projects}";
+    const n = fields['project_items'].length as number;
+    for (let i = 0; i < n; i++) {
+        tex += '\n' + make_proj_item(i, fields['project_items'][i]['items'].length);
+    }
+    tex += '\n' + '\\end{experienceSection}';
+    return tex;
+}
+
 const extract_bullet_points = (str: string): string[] => {
     const lines = str.split('\n');
     // Initialize an array to hold the bullet points
@@ -76,6 +107,23 @@ const preprocess = (fields: any) => {
 
         for (let k = 0; k < fields['experience_items'][i]['items'].length; k++) {
             fields['tokens'][`_experience_${i}_item_${k}`] = fields['experience_items'][i]['items'][k];
+        }
+    }
+
+    for (let i = 0; i < fields['project_items'].length; i++) {
+        fields['project_items'][i]['items'] = extract_bullet_points(fields['project_items'][i]['description']);
+    }
+
+    fields['projects'] = project_section(fields);
+
+    for (let i = 0; i < fields['project_items'].length; i++) {
+        for (const [key, value] of Object.entries(fields['project_items'][i])) {
+            if (key == 'items') continue;
+            fields['tokens'][`_project_${i}_${key}`] = value;
+        }
+
+        for (let k = 0; k < fields['project_items'][i]['items'].length; k++) {
+            fields['tokens'][`_project_${i}_item_${k}`] = fields['project_items'][i]['items'][k];
         }
     }
     return fields
